@@ -1,4 +1,4 @@
-package Package.name.com.example.coffeeshop.controllers.models;
+package Package.name.com.example.coffeeshop.models;
 
 
 import jakarta.persistence.*;

@@ -2,7 +2,7 @@ package Package.name.com.example.coffeeshop.controllers;
 
 
 
-import Package.name.com.example.coffeeshop.controllers.models.Product;
+import Package.name.com.example.coffeeshop.models.Product;
 import Package.name.com.example.coffeeshop.services.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,12 +25,19 @@ public class ProductsController {
         return "products/index";
     }
 
-    // Trang bán chạy
+    // Trang Đồ ăn kèm
     @GetMapping("/banchay")
     public String banchayProductList(Model model) {
         List<Product> products = repo.findAll();
         model.addAttribute("products", products);
         return "products/banchay";
+    }
+    // Trang Đồ ăn kèm
+    @GetMapping("/Doankem")
+    public String doanKemProductList(Model model) {
+        List<Product> products = repo.findAll();
+        model.addAttribute("products", products);
+        return "products/Doankem";
     }
 
     // Trang cart
