@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -183,58 +184,95 @@
 </header>
 <br>
 <br>
-<body>
-<div class="container my-5">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="https://hoanghamobile.com/tin-tuc/wp-content/webp-express/webp-images/uploads/2024/08/anh-cafe-19.jpg.webp" alt="Product Image" width="600" height="400" class="product-image">
-        </div>
-        <div class="col-md-6">
-            <h1>Cà Phê Arabica</h1>
-            <p class="lead">Giá: <span id="product-price">50,000₫</span></p>
-            <div class="mb-3">
-                <label for="quantity" class="form-label">Số lượng:</label>
-                <div class="input-group">
-                    <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
-                    <input type="number" class="form-control quantity-input" id="quantity" value="1" min="1" style="width: 60px;">
-                    <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
-                </div>
-            </div>
-            <button class="btn btn-primary" onclick="addToCart()" style="font-size: 14px;">Đặt hàng</button>
+
+<main>
+    <div class="container my-5">
+        <h1>Giỏ hàng</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="cart-items">
+            <!-- Cart items will be dynamically added here -->
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" class="text-end">Tổng cộng:</td>
+                <td id="total-price">0₫</td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="d-flex justify-content-end">
+            <a href="/checkout" class="btn btn-primary">Thanh toán</a>
         </div>
     </div>
-</div>
+</main>
 
+<footer>
+    <!-- Footer content -->
+</footer>
 
 <script>
-    let quantity = 1;
+    // Fetch cart items from the server
+    fetch('/api/cart')
+        .then(response => response.json())
+        .then(cartItems => {
+            const cartItemsContainer = document.getElementById('cart-items');
+            let totalPrice = 0;
 
-    function decreaseQuantity() {
-        if (quantity > 1) {
-            quantity--;
-            document.getElementById("quantity").value = quantity;
-        }
+            cartItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <img src="${item.imageUrl}" alt="${item.name}" style="max-width: 100px;">
+                        <span>${item.name}</span>
+                    </td>
+                    <td>${item.price.toLocaleString()}₫</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="decreaseQuantity('${item.id}')">-</button>
+                            <span id="quantity-${item.id}" class="mx-2">${item.quantity}</span>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="increaseQuantity('${item.id}')">+</button>
+                        </div>
+                    </td>
+                    <td>${(item.price * item.quantity).toLocaleString()}₫</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.id}')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                cartItemsContainer.appendChild(row);
+                totalPrice += item.price * item.quantity;
+            });
+
+            document.getElementById('total-price').textContent = totalPrice.toLocaleString() + '₫';
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
+
+    function increaseQuantity(itemId) {
+        // Implement the logic to increase the quantity of the item in the cart
+        // and update the UI accordingly
     }
 
-    function increaseQuantity() {
-        quantity++;
-        document.getElementById("quantity").value = quantity;
+    function decreaseQuantity(itemId) {
+        // Implement the logic to decrease the quantity of the item in the cart
+        // and update the UI accordingly
     }
 
-    function addToCart() {
-        const productPrice = parseFloat(document.getElementById("product-price").textContent.replace("₫", ""));
-        const totalPrice = productPrice * quantity;
-        const cartData = {
-            productName: "Cà Phê Arabica",
-            quantity: quantity,
-            totalPrice: totalPrice
-        };
-
-        // Lưu dữ liệu vào giỏ hàng (ví dụ: localStorage)
-        localStorage.setItem("cartData", JSON.stringify(cartData));
-
-        // Chuyển hướng đến trang giỏ hàng
-        window.location.href = "/showcart";
+    function removeFromCart(itemId) {
+        // Implement the logic to remove the item from the cart
+        // and update the UI accordingly
     }
 </script>
 </body>
+</html>

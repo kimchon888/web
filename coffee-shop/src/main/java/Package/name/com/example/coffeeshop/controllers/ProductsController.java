@@ -26,11 +26,11 @@ public class ProductsController {
     }
 
     // Trang Đồ ăn kèm
-    @GetMapping("/banchay")
+    @GetMapping("/SanPhamNoiBat")
     public String banchayProductList(Model model) {
         List<Product> products = repo.findAll();
         model.addAttribute("products", products);
-        return "products/banchay";
+        return "products/SanPhamNoiBat";
     }
     // Trang Đồ ăn kèm
     @GetMapping("/Doankem")
@@ -40,13 +40,6 @@ public class ProductsController {
         return "products/Doankem";
     }
 
-    // Trang cart
-    @GetMapping("/cart")
-    public String cartProductList(Model model) {
-        List<Product> products = repo.findAll();
-        model.addAttribute("products", products);
-        return "products/cart";
-    }
 
     // Trang lỗi
     @GetMapping("/custom-error")
@@ -85,21 +78,5 @@ public class ProductsController {
         model.addAttribute("product", product);
         return "products/cart";
     }
-
-    // Xóa sản phẩm
-//    @DeleteMapping("/delete/{id}")
-//    public String deleteProduct(@PathVariable("id") Long id) {
-//        try {
-//            Product product = repo.findById(id).orElse(null);
-//            if (product != null) {
-//                product.setHidden(true);
-//                repo.save(product);
-//                return "redirect:/admin?success=true";
-//            }
-//            return "redirect:/admin?error=true";
-//        } catch (Exception e) {
-//            return "redirect:/admin?error=true";
-//        }
-//    }
 
 }
