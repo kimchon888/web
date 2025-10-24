@@ -1,4 +1,4 @@
-package Package.name.com.example.coffeeshop;
+package com.example.coffeeshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +16,4 @@ public class CoffeeShopApplication {
 	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
 		return new HiddenHttpMethodFilter();
 	}
-
-
 }

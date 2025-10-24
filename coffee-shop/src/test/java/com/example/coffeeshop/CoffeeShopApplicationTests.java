@@ -1,4 +1,4 @@
-package Package.name.com.example.coffeeshop;
+package com.example.coffeeshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

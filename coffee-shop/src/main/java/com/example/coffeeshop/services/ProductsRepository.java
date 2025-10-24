@@ -1,7 +1,7 @@
-package Package.name.com.example.coffeeshop.services;
+package com.example.coffeeshop.services;
 
 
-import Package.name.com.example.coffeeshop.models.Product;
+import com.example.coffeeshop.models.Product;
 
 import java.util.List;
 
